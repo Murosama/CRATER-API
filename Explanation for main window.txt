@@ -1,1 +1,2 @@
 This project is a simple city simulation game built using Java Swing.  It serves as a starting point for developing a more complex city simulation game.
+Libraries like LibGDX and LWJGL will be used for advanced graphics.
