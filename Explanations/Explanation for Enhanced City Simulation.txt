@@ -1,0 +1,1 @@
+An enhanced version of CitySimulation that includes a grid and building placement functionality. Furthermore, I will proceed to do the graphical things. I will try to implement the game with using Unity. Render pipelines will be implemented.
