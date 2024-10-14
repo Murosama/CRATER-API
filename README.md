@@ -72,7 +72,7 @@ After successful setup, run the CityBuilderGame class to start the game engine.
 
 ## Project Structure
 
-```bash
+
 .
 ├── src
 │   ├── main
