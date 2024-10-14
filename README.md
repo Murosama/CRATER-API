@@ -4,7 +4,7 @@
 
 #CityBuilder Game Engine
 
-CityBuilder Game Engine is a custom-built Java-based game engine designed for creating 2D city-building simulation games. This engine provides essential components like rendering, entity management, resource management, and input handling to help developers like us to create interactive and dynamic city-building games with ease.
+CityBuilder Game Engine is a custom-built Java-based game engine designed for creating 2D and 3D city-building simulation games. This engine provides essential components like rendering, entity management, resource management, and input handling to help developers like us to create interactive and dynamic city-building games with ease.
 
 
 Features:
