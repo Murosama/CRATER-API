@@ -1,30 +1,44 @@
-#pragma once
+#ifndef RESOURCEMANAGER_H
+#define RESOURCEMANAGER_H
 
-#include "CoreMinimal.h"
-#include "Resource.h"
-#include "ResourceManager.generated.h"
+#include <unordered_map>
+#include <string>
 
-UCLASS(Blueprintable)
-class CITYBUILDER_API UResourceManager : public UObject {
-    GENERATED_BODY()
-
+class ResourceManager {
 public:
-    UResourceManager();
+    // Constructor initializes resources to default values
+    ResourceManager();
 
-    // Function to manage resources
-    UFUNCTION(BlueprintCallable, Category = "Resource Management")
-    void AddResource(UResource* Resource);
+    // Method to add resources
+    void addResource(const std::string& resourceName, int amount);
 
-    UFUNCTION(BlueprintCallable, Category = "Resource Management")
-    void RemoveResource(UResource* Resource);
+    // Method to consume resources
+    bool consumeResource(const std::string& resourceName, int amount);
 
-    // Get total resource count
-    UFUNCTION(BlueprintCallable, Category = "Resource Management")
-    int32 GetTotalResourceCount() const;
+    // Method to trade resources with a ratio of exchange
+    bool tradeResource(const std::string& resourceGiven, const std::string& resourceReceived, int amountGiven, int ratio);
 
-protected:
-    UPROPERTY()
-    TArray<UResource*> Resources;
+    // Method for resource decay over time
+    void decayResource(const std::string& resourceName, int decayRate);
 
-    void NotifyResourceChange(const FString& ResourceName, int32 Amount, bool bIsAdded);
+    // Method to calculate and display resource efficiency (consumption vs. production)
+    void calculateEfficiency();
+
+    // Method for population growth based on resources and happiness
+    void growPopulation();
+
+    // Method for dynamic resource production (based on buildings, population, etc.)
+    void produceResources();
+
+    // Method for checking if a specific resource is running low
+    void checkForLowResource(const std::string& resourceName, int threshold);
+
+    // Method to display all current resources
+    void displayResources();
+
+private:
+    // Using an unordered map to store resources for flexibility
+    std::unordered_map<std::string, int> resources;
 };
+
+#endif // RESOURCEMANAGER_H
