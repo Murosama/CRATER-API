@@ -1,36 +1,16 @@
-#pragma once
+#ifndef RESOURCE_EVENT_H
+#define RESOURCE_EVENT_H
 
-#include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
-#include "ResourceEvent.generated.h"
+#include <functional>
+#include <vector>
 
-UENUM(BlueprintType)
-enum class EResourceEventType : uint8 {
-    ResourceCollected,
-    ResourceUsed,
-    ResourceDepleted
-};
-
-UCLASS(Blueprintable)
-class CITYBUILDER_API UResourceEvent : public UObject {
-    GENERATED_BODY()
-
+class ResourceEvent {
 public:
-    UResourceEvent();
+    void subscribe(const std::function<void()>& callback);
+    void notify(); // Notify all subscribers about an event
 
-    // Event type
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource Event")
-    EResourceEventType EventType;
-
-    // The amount involved in the event
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource Event")
-    int32 Amount;
-
-    // The resource involved in the event
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Resource Event")
-    FString ResourceName;
-
-    // Function to trigger the event
-    UFUNCTION(BlueprintCallable, Category = "Resource Event")
-    void TriggerEvent();
+private:
+    std::vector<std::function<void()>> listeners; // List of event listeners
 };
+
+#endif // RESOURCE_EVENT_H
