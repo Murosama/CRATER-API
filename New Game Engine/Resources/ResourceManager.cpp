@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include <ResourceManager.h>
 
 class ResourceManager {
 public:
@@ -114,6 +115,26 @@ public:
             std::cout << resource.first << ": " << resource.second << std::endl;
         }
         std::cout << "--------------------------\n" << std::endl;
+    }
+
+    void ResourceManager::produceResource(const std::string& name, double amount) {
+    resources[name].produce(amount);
+    }
+
+    void ResourceManager::depleteResource(const std::string& name, double amount) {
+    resources[name].deplete(amount);
+    }
+
+    std::vector<double> ResourceManager::getResourceTrends(const std::string& name) const {
+    return resources.at(name).getAnalytics();
+    }
+
+    void ResourceManager::adjustResourceScaling(const std::string& name, double scalingFactor) {
+    resources[name].setScalingFactor(scalingFactor);
+    }
+
+    double ResourceManager::getResourceAmount(const std::string& name) const {
+    return resources.at(name).getCurrentAmount();
     }
 
 private:

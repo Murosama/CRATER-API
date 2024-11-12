@@ -1,26 +1,32 @@
 #include "Resource.h"
 
-UResource::UResource() {
-    ResourceAmount = 0;
-    ResourceName = TEXT("Generic Resource");
-    bIsRenewable = false;
+Resource::Resource(double initialAmount, double scalingFactor)
+    : totalAmount(initialAmount), scalingFactor(scalingFactor) {}
+
+void Resource::produce(double amount) {
+    totalAmount += amount * scalingFactor;
+    updateAnalytics();
 }
 
-void UResource::Collect(int32 Amount) {
-    ResourceAmount += Amount;
-    OnCollected(Amount);
+void Resource::deplete(double amount) {
+    totalAmount -= amount * scalingFactor;
+    if (totalAmount < 0) totalAmount = 0;
+    updateAnalytics();
 }
 
-void UResource::Use(int32 Amount) {
-    if (ResourceAmount > 0) {
-        ResourceAmount = FMath::Max(ResourceAmount - Amount, 0);
-        // Additional logic if the resource is consumed completely
-        if (IsEmpty()) {
-            // Trigger event or notification
-        }
-    }
+void Resource::updateAnalytics() {
+    // Record production and depletion trends over time
+    analyticsData.push_back(totalAmount);
 }
 
-void UResource::OnCollected(int32 Amount) {
-    // Custom logic upon collection, e.g., logging or triggering UI updates
+void Resource::setScalingFactor(double newScalingFactor) {
+    scalingFactor = newScalingFactor;
+}
+
+double Resource::getCurrentAmount() const {
+    return totalAmount;
+}
+
+std::vector<double> Resource::getAnalytics() const {
+    return analyticsData;
 }
