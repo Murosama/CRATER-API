@@ -1,16 +1,21 @@
-#ifndef RESOURCE_EVENT_H
-#define RESOURCE_EVENT_H
-
+#pragma once
 #include <functional>
-#include <vector>
+#include <string>
 
 class ResourceEvent {
 public:
-    void subscribe(const std::function<void()>& callback);
-    void notify(); // Notify all subscribers about an event
+    using Callback = std::function<void(double)>;  // Event callback takes a numeric value (e.g., production boost)
+
+    ResourceEvent(const std::string& name, Callback callback)
+        : eventName(name), eventCallback(callback) {}
+
+    void triggerEvent(double value) {
+        eventCallback(value);  // Execute callback with provided value
+    }
+
+    std::string getName() const { return eventName; }
 
 private:
-    std::vector<std::function<void()>> listeners; // List of event listeners
+    std::string eventName;
+    Callback eventCallback;
 };
-
-#endif // RESOURCE_EVENT_H

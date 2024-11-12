@@ -118,11 +118,11 @@ public:
     }
 
     void ResourceManager::produceResource(const std::string& name, double amount) {
-    resources[name].produce(amount);
+        resources[name].produce(amount);
     }
 
     void ResourceManager::depleteResource(const std::string& name, double amount) {
-    resources[name].deplete(amount);
+        resources[name].deplete(amount);
     }
 
     std::vector<double> ResourceManager::getResourceTrends(const std::string& name) const {
@@ -130,12 +130,26 @@ public:
     }
 
     void ResourceManager::adjustResourceScaling(const std::string& name, double scalingFactor) {
-    resources[name].setScalingFactor(scalingFactor);
+        resources[name].setScalingFactor(scalingFactor);
     }
 
     double ResourceManager::getResourceAmount(const std::string& name) const {
-    return resources.at(name).getCurrentAmount();
+        return resources.at(name).getCurrentAmount();
     }
+
+    void ResourceManager::registerEvent(const std::string& resourceName, const ResourceEvent& event) {
+        events[resourceName].push_back(event);
+}
+
+void ResourceManager::triggerEvent(const std::string& eventName, double value) {
+    for (auto& [resourceName, resourceEvents] : events) {
+        for (auto& event : resourceEvents) {
+            if (event.getName() == eventName) {
+                event.triggerEvent(value);
+            }
+        }
+    }
+}
 
 private:
     // Using an unordered map to store resources for flexibility
