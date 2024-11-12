@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <string>
 #include <ResourceManager.h>
+#include <ResourceEvent.h>
 
 class ResourceManager {
 public:
@@ -166,6 +167,30 @@ public:
     std::vector<double> ResourceManager::getResourceTrends(const std::string& resourceName) const {
         return analytics.getTrends(resourceName);
 }
+
+    void ResourceManager::triggerEvent(const std::string& eventName, double value) {
+        for (auto& [resourceName, resourceEvents] : events) {
+            for (auto& event : resourceEvents) {
+                if (event.getName() == eventName) {
+                    switch (event.getType()) {
+                        case ResourceEvent::BOOST:
+                            resources[resourceName].increaseProduction(value); // Boosts production rate
+                            break;
+                        case ResourceEvent::DECAY:
+                            resources[resourceName].increaseDepletion(value); // Increases depletion rate
+                            break;
+                        case ResourceEvent::LOCKDOWN:
+                            resources[resourceName].pauseProduction(); // Pauses resource production
+                            break;
+                        case ResourceEvent::PRICE_SURGE:
+                            resources[resourceName].adjustMarketValue(value); // Changes market price
+                            break;
+                    }
+                    event.triggerEvent(value);  // Trigger callback for additional effects
+                }
+            }
+        }
+    }
 
 private:
     // Using an unordered map to store resources for flexibility

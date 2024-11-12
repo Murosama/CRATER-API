@@ -4,18 +4,22 @@
 
 class ResourceEvent {
 public:
-    using Callback = std::function<void(double)>;  // Event callback takes a numeric value (e.g., production boost)
+    enum EventType { BOOST, DECAY, LOCKDOWN, PRICE_SURGE };  // Define different event types
 
-    ResourceEvent(const std::string& name, Callback callback)
-        : eventName(name), eventCallback(callback) {}
+    using Callback = std::function<void(double)>;
+    
+    ResourceEvent(const std::string& name, EventType type, Callback callback)
+        : eventName(name), eventType(type), eventCallback(callback) {}
 
     void triggerEvent(double value) {
         eventCallback(value);  // Execute callback with provided value
     }
 
     std::string getName() const { return eventName; }
+    EventType getType() const { return eventType; }
 
 private:
     std::string eventName;
+    EventType eventType;
     Callback eventCallback;
 };
