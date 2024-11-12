@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <string>
+#include "ResourceAnalytics.h"
 
 class ResourceManager {
 public:
@@ -36,9 +37,25 @@ public:
     // Method to display all current resources
     void displayResources();
 
+    void produceResource(const std::string& name, double amount);
+
+    void depleteResource(const std::string& name, double amount);
+
+    void adjustResourceScaling(const std::string& name, double scalingFactor);
+
+    void registerEvent(const std::string& resourceName, const ResourceEvent& event);
+
+    void triggerEvent(const std::string& eventName, double value);
+
+    std::vector<double> getResourceTrends(const std::string& resourceName) const;
+
+
 private:
     // Using an unordered map to store resources for flexibility
     std::unordered_map<std::string, int> resources;
+    std::map<std::string, Resource> resources;
+    ResourceAnalytics analytics;
+    std::map<std::string, std::vector<ResourceEvent>> events;
 };
 
 #endif // RESOURCEMANAGER_H

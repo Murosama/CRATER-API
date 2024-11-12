@@ -17,6 +17,7 @@ public:
         resources["Technology"] = 50;
         resources["Happiness"] = 75;  // Citizens' happiness level
     }
+    ResourceManager::ResourceManager() {}
 
     // Method to add resources
     void addResource(const std::string& resourceName, int amount) {
@@ -141,14 +142,29 @@ public:
         events[resourceName].push_back(event);
 }
 
-void ResourceManager::triggerEvent(const std::string& eventName, double value) {
-    for (auto& [resourceName, resourceEvents] : events) {
-        for (auto& event : resourceEvents) {
-            if (event.getName() == eventName) {
-                event.triggerEvent(value);
+    void ResourceManager::triggerEvent(const std::string& eventName, double value) {
+        for (auto& [resourceName, resourceEvents] : events) {
+            for (auto& event : resourceEvents) {
+                if (event.getName() == eventName) {
+                 event.triggerEvent(value);
             }
         }
     }
+}
+
+
+    void ResourceManager::produceResource(const std::string& name, double amount) {
+        resources[name].produce(amount);
+        analytics.recordTrend(name, resources[name].getCurrentAmount());  // Track trend after production
+}
+
+    void ResourceManager::depleteResource(const std::string& name, double amount) {
+        resources[name].deplete(amount);
+        analytics.recordTrend(name, resources[name].getCurrentAmount());  // Track trend after depletion
+}
+
+    std::vector<double> ResourceManager::getResourceTrends(const std::string& resourceName) const {
+        return analytics.getTrends(resourceName);
 }
 
 private:
