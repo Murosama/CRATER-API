@@ -1,7 +1,7 @@
 
 Welcome to the CityBuilder Game! 🎉
 
-I’m thrilled to share my journey of creating this city-building game engine. This project is not just about coding; it’s about learning, growing, and having a lot of fun along the way!
+I’m thrilled to share my journey of creating this city-building game. This project is not just about coding; it’s about learning, growing, and having a lot of fun along the way!
 
 🌟 Overview
 CityBuilder is designed to empower aspiring city planners and builders. With a robust set of features, this engine allows players to design, construct, and manage their dream cities. From resource management to building different types of structures, the possibilities are endless!
